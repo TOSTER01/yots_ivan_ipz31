@@ -5,9 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -22,7 +24,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,7 +70,8 @@ fun ProfilePicture(modifier: Modifier = Modifier) {
 @Composable
 fun AboutDevice(modifier: Modifier = Modifier) {
     Row (modifier = Modifier
-        .padding(15.dp)) {
+        .padding(15.dp)
+        .fillMaxWidth()) {
         Image(
             painter = painterResource(id = R.drawable.device_settings_icon),
             contentDescription = stringResource(id = R.string.device_settings_description),
@@ -93,7 +95,10 @@ fun AboutDevice(modifier: Modifier = Modifier) {
 
 @Composable
 fun SearchInput(modifier: Modifier = Modifier) {
-    Row (modifier = Modifier) {
+    Row (modifier = Modifier
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(25.dp))
+        .background(color = Color(0xFFFDFCF7))) {
         Image(
             painter = painterResource(id = R.drawable.search_icon),
             contentDescription = stringResource(id = R.string.search_picture_description),
@@ -102,7 +107,8 @@ fun SearchInput(modifier: Modifier = Modifier) {
                 .padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 11.dp)
         )
         Column (modifier = Modifier
-                .padding(top = 12.dp, bottom = 12.dp)) {
+            .padding(top = 12.dp, bottom = 12.dp)
+            .alpha(0.6f)) {
             Text(
                 text = "Search Settings...",
                 fontSize = 20.sp
@@ -111,28 +117,210 @@ fun SearchInput(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun NetworkInternetPart(modifier: Modifier = Modifier) {
+    Row(modifier = Modifier
+        .padding(top = 40.dp)
+        .fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .padding(top = 5.dp)
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFE2E3D8)),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.wifi_icon),
+                contentDescription = stringResource(id = R.string.search_picture_description),
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Column(modifier = Modifier
+            .padding(top = 1.dp, bottom = 1.dp, start = 17.dp)) {
+            Text(
+                text = "Network & Internet",
+                fontSize = 24.sp
+            )
+            Text(
+                text = "Wi-Fi, Mobile, Data usage, Hotspot",
+                fontSize = 17.sp,
+                modifier = Modifier.alpha(0.6f)
+            )
+        }
+    }
+}
+
+@Composable
+fun ConnectedDevices(modifier: Modifier = Modifier) {
+    Row(modifier = Modifier
+        .padding(top = 40.dp)
+        .fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .padding(top = 5.dp)
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFE2E3D8)),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.devices_icon),
+                contentDescription = stringResource(id = R.string.search_picture_description),
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Column(modifier = Modifier
+            .padding(top = 1.dp, bottom = 1.dp, start = 17.dp)) {
+            Text(
+                text = "Connected devices",
+                fontSize = 24.sp
+            )
+            Text(
+                text = "Bluetooth, Cast, NFC",
+                fontSize = 17.sp,
+                modifier = Modifier.alpha(0.6f)
+            )
+        }
+    }
+}
+
+@Composable
+fun AboutApp(modifier: Modifier = Modifier) {
+    Row(modifier = Modifier
+        .padding(top = 40.dp)
+        .fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .padding(top = 5.dp)
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFE2E3D8)),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.app_icon),
+                contentDescription = stringResource(id = R.string.search_picture_description),
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Column(modifier = Modifier
+            .padding(top = 1.dp, bottom = 1.dp, start = 17.dp)) {
+            Text(
+                text = "App",
+                fontSize = 24.sp
+            )
+            Text(
+                text = "Permissions, default apps",
+                fontSize = 17.sp,
+                modifier = Modifier.alpha(0.6f)
+            )
+        }
+    }
+}
+
+@Composable
+fun NotificationsPart(modifier: Modifier = Modifier) {
+    Row(modifier = Modifier
+        .padding(top = 40.dp)
+        .fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .padding(top = 5.dp)
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFE2E3D8)),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.notifications_icon),
+                contentDescription = stringResource(id = R.string.search_picture_description),
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Column(modifier = Modifier
+            .padding(top = 1.dp, bottom = 1.dp, start = 17.dp)) {
+            Text(
+                text = "Notifications",
+                fontSize = 24.sp
+            )
+            Text(
+                text = "Permissions, dafault apps",
+                fontSize = 17.sp,
+                modifier = Modifier.alpha(0.6f)
+            )
+        }
+    }
+}
+
+@Composable
+fun DigitalWellbeingRart(modifier: Modifier = Modifier) {
+    Row(modifier = Modifier
+        .padding(top = 40.dp)
+        .fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .padding(top = 5.dp)
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFE2E3D8)),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.digital_wellbeing_icon),
+                contentDescription = stringResource(id = R.string.search_picture_description),
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Column(modifier = Modifier
+            .padding(top = 1.dp, bottom = 1.dp, start = 17.dp)) {
+            Text(
+                text = "Digital wellbeing",
+                fontSize = 24.sp
+            )
+            Text(
+                text = "Screen time, app timer, bedtime schedules",
+                fontSize = 17.sp,
+                modifier = Modifier.alpha(0.6f)
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    Lab1Theme{
-        Column (modifier = Modifier
-                .padding(start = 21.dp, end = 21.dp)) {
-            Row (modifier = Modifier
-                .align(alignment = Alignment.End)
-                .padding(top = 48.dp)) {
-                ProfilePicture()
-            }
-            TextHeader()
-            Row (modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .background(color = Color(0xFFDBEA8D))) {
-                AboutDevice()
-            }
-            Row (modifier = Modifier
-                .clip(RoundedCornerShape(25.dp))
-                .background(color = Color(0xFFFDFCF7))) {
-                SearchInput()
-
+    Lab1Theme {
+        Box(modifier = Modifier
+            .background(color = Color(0xFFEDEFE3))
+            .padding(bottom = 40.dp)){
+            Column (modifier = Modifier
+                    .padding(start = 21.dp, end = 21.dp)) {
+                Row (modifier = Modifier
+                    .align(alignment = Alignment.End)
+                    .padding(top = 48.dp)) {
+                    ProfilePicture()
+                }
+                TextHeader()
+                Row (modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(color = Color(0xFFDBEA8D))) {
+                    AboutDevice()
+                }
+                Row (modifier = Modifier
+                    .padding(top = 15.dp)) {
+                    SearchInput()
+                }
+                NetworkInternetPart()
+                ConnectedDevices()
+                AboutApp()
+                NotificationsPart()
+                DigitalWellbeingRart()
             }
         }
     }
