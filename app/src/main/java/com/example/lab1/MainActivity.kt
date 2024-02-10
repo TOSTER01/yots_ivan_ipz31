@@ -132,6 +132,7 @@ fun GreetingPreview() {
                 .clip(RoundedCornerShape(25.dp))
                 .background(color = Color(0xFFFDFCF7))) {
                 SearchInput()
+
             }
         }
     }
