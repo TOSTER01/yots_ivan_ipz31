@@ -17,10 +17,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.artspaceapp.ui.theme.ArtSpaceAppTheme
@@ -80,21 +83,26 @@ fun ImgDescription(imgName: String, imgArtist: String, modifier: Modifier = Modi
         }
     }
 }
+
 @Composable
-fun ButtonsUnderText(modifier: Modifier = Modifier) {
+fun ButtonsUnderText(
+    onNextClicked: () -> Unit,
+    onPreviousClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
-        Row (modifier = Modifier.padding(top = 10.dp)){
+        Row(modifier = Modifier.padding(top = 10.dp)) {
             Button(
-                onClick = {},
+                onClick = { onPreviousClicked() },
                 modifier = Modifier.padding(end = 20.dp)
             ) {
                 Text("Previous")
             }
             Button(
-                onClick = {},
+                onClick = { onNextClicked() }
             ) {
                 Text("Next")
             }
@@ -106,7 +114,7 @@ fun ButtonsUnderText(modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     ArtSpaceAppTheme {
-        var imgIndex = 0
+        var imgIndex by remember { mutableStateOf(0) }
         val imgArr = arrayOf(
             R.drawable.pes,
             R.drawable.panda,
@@ -116,7 +124,10 @@ fun GreetingPreview() {
         Column(modifier = Modifier.padding(top = 40.dp, bottom = 40.dp)) {
             ImgView(imgArr[imgIndex])
             ImgDescription("pes", "pes artist")
-            ButtonsUnderText()
+            ButtonsUnderText(
+                onNextClicked = { if (imgIndex < imgArr.size - 1) imgIndex++ },
+                onPreviousClicked = { if (imgIndex > 0) imgIndex-- }
+            )
         }
     }
 }
