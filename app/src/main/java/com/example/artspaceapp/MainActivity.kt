@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -72,10 +73,31 @@ fun ImgDescription(imgName: String, imgArtist: String, modifier: Modifier = Modi
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(top = 5.dp)
+            modifier = Modifier.padding(top = 10.dp)
         ) {
             Text(text = imgName)
             Text(text = imgArtist)
+        }
+    }
+}
+@Composable
+fun ButtonsUnderText(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Row (modifier = Modifier.padding(top = 10.dp)){
+            Button(
+                onClick = {},
+                modifier = Modifier.padding(end = 20.dp)
+            ) {
+                Text("Previous")
+            }
+            Button(
+                onClick = {},
+            ) {
+                Text("Next")
+            }
         }
     }
 }
@@ -84,9 +106,17 @@ fun ImgDescription(imgName: String, imgArtist: String, modifier: Modifier = Modi
 @Composable
 fun GreetingPreview() {
     ArtSpaceAppTheme {
+        var imgIndex = 0
+        val imgArr = arrayOf(
+            R.drawable.pes,
+            R.drawable.panda,
+            R.drawable.drakon
+        )
+
         Column(modifier = Modifier.padding(top = 40.dp, bottom = 40.dp)) {
-            ImgView(R.drawable.pes)
-            ImgDescription("pes", "Pes artist")
+            ImgView(imgArr[imgIndex])
+            ImgDescription("pes", "pes artist")
+            ButtonsUnderText()
         }
     }
 }
