@@ -121,12 +121,24 @@ fun GreetingPreview() {
             R.drawable.drakon
         )
 
+        val textOneArr = arrayOf(
+            "Pes",
+            "Panda",
+            "Drakon"
+        )
+
+        val textScndArr = arrayOf(
+            "Pes artist",
+            "Panda artist",
+            "Drakon artist"
+        )
+
         Column(modifier = Modifier.padding(top = 40.dp, bottom = 40.dp)) {
             ImgView(imgArr[imgIndex])
-            ImgDescription("pes", "pes artist")
+            ImgDescription(textOneArr[imgIndex], textScndArr[imgIndex])
             ButtonsUnderText(
-                onNextClicked = { if (imgIndex < imgArr.size - 1) imgIndex++ },
-                onPreviousClicked = { if (imgIndex > 0) imgIndex-- }
+                onNextClicked = { if (imgIndex < imgArr.size - 1) imgIndex++ else imgIndex = 0 },
+                onPreviousClicked = { if (imgIndex > 0) imgIndex-- else imgIndex = 2 }
             )
         }
     }
