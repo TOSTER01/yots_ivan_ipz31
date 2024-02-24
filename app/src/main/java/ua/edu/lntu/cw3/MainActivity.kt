@@ -58,8 +58,21 @@ fun ListItemView(item: ListItem) {
             .padding(20.dp)
             .fillMaxWidth()
     ) {
-        Text(text = item.title, fontWeight = FontWeight.Bold)
-        Text(text = item.subtitle, color = Color.Gray)
+        Text(text = item.title, fontWeight = FontWeight.Bold, color = Color.Gray)
+        Text(text = item.subtitle, color = Color.Blue)
+    }
+}
+
+
+@Composable
+fun ListItemViewSecond(item: ListItem) {
+    Column(
+        modifier = Modifier
+            .padding(20.dp)
+            .fillMaxWidth()
+    ) {
+        Text(text = item.title, fontWeight = FontWeight.W900, color = Color.DarkGray)
+        Text(text = item.subtitle, color = Color.Green)
     }
 }
 
@@ -77,7 +90,7 @@ fun MyScreen() {
         }
         Column(modifier = Modifier.weight(1f)) {
             twoDimensionalItems[1].forEach { item ->
-                ListItemView(item = item)
+                ListItemViewSecond(item = item)
                 Divider()
             }
         }
