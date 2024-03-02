@@ -15,8 +15,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,13 +46,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyScreen() {
     val items = listOf("Елемент 1", "Елемент 2", "Елемент 3", "Елемент 4", "Елемент 5")
-    val selectedItem = remember { mutableStateOf(-1) }
+    var selectedItem by rememberSaveable { mutableStateOf(-1) }
 
-    if (selectedItem.value != -1) {
-        Screen2(selectedItem.value)
+    if (selectedItem != -1) {
+        Screen2(selectedItem + 1)
     } else {
         MyList(items) { index ->
-            selectedItem.value = index
+            selectedItem = index
         }
     }
 }
@@ -72,7 +74,7 @@ fun ListItem(text: String, onItemClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(8.dp, top = 40.dp)
             .clickable(onClick = onItemClick)
     ) {
         Text(text = text, fontSize = 20.sp)
@@ -90,7 +92,7 @@ fun Screen2(itemIndex: Int) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Елемент $itemIndex", fontSize = 24.sp)
+            Text(text = "Елемент номер $itemIndex", fontSize = 24.sp)
         }
     }
 }
