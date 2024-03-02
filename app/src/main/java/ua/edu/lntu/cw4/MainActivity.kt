@@ -1,32 +1,32 @@
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ua.edu.lntu.cw4.ui.theme.IPZ_CR_4Theme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -36,7 +36,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyScreen()
+                    val navController = rememberNavController()
+                    Scaffold(
+                        topBar = {
+                            TopAppBar(
+                                title = { Text(text = "My App") }
+                            )
+                        }
+                    ) {
+                        MyScreen(navController)
+                    }
                 }
             }
         }
@@ -44,45 +53,50 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyScreen() {
-    val items = listOf("Елемент 1", "Елемент 2", "Елемент 3", "Елемент 4", "Елемент 5")
-    var selectedItem by rememberSaveable { mutableStateOf(-1) }
+fun MyScreen(navController: NavController) {
+    var selectedItem by rememberSaveable { mutableStateOf<Int?>(null) }
 
-    if (selectedItem != -1) {
-        Screen2(selectedItem + 1)
+    if (selectedItem != null) {
+        Screen2(selectedItem!!, onBack = { selectedItem = null })
     } else {
-        MyList(items) { index ->
+        MyList(navController, onItemClick = { index ->
             selectedItem = index
-        }
+        })
     }
 }
 
 @Composable
-fun MyList(items: List<String>, onItemClick: (Int) -> Unit) {
+fun MyList(navController: NavController, onItemClick: (Int) -> Unit) {
+    val items = listOf("Елемент 1", "Елемент 2", "Елемент 3", "Елемент 4", "Елемент 5")
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp)
     ) {
-        itemsIndexed(items) { index, item ->
-            ListItem(text = item, onItemClick = { onItemClick(index) })
+        items(items) { item ->
+            ListItem(
+                text = item,
+                onItemClick = onItemClick,
+                itemIndex = Character.getNumericValue(item.last())
+            )
         }
     }
 }
 
 @Composable
-fun ListItem(text: String, onItemClick: () -> Unit) {
+fun ListItem(text: String, onItemClick: (Int) -> Unit, itemIndex: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp, top = 40.dp)
-            .clickable(onClick = onItemClick)
+            .padding(vertical = 8.dp)
+            .clickable { onItemClick(itemIndex) }
     ) {
-        Text(text = text, fontSize = 20.sp)
+        Text(text = text, fontSize = 20.sp, modifier = Modifier.padding(8.dp))
     }
 }
 
 @Composable
-fun Screen2(itemIndex: Int) {
+fun Screen2(itemIndex: Int, onBack: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -93,6 +107,10 @@ fun Screen2(itemIndex: Int) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "Елемент номер $itemIndex", fontSize = 24.sp)
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = onBack) {
+                Text("Back")
+            }
         }
     }
 }
@@ -100,5 +118,7 @@ fun Screen2(itemIndex: Int) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MyScreen()
+    IPZ_CR_4Theme {
+        MyScreen(navController = rememberNavController())
+    }
 }
